@@ -2,112 +2,203 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>The Feast Ayala Cebu | Socials</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Feast Cebu City | Connect & Grow</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #003366;
+            --accent-gold: #D4AF37;
+            --text-light: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #001f3f 0%, #003366 100%);
+            background-attachment: fixed;
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            text-align: center;
+        }
+
+        /* Profile Section */
+        .profile {
+            margin-bottom: 2rem;
+        }
+
+        .logo-placeholder {
+            width: 100px;
+            height: 100px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+        p.subtitle { opacity: 0.8; font-size: 0.9rem; margin-bottom: 1.5rem; }
+
+        /* Schedule Card */
+        .schedule-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .schedule-card h2 {
+            font-size: 1.1rem;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .session {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        /* Buttons Area */
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .link-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 1rem;
+            border-radius: 12px;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .link-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+            border-color: var(--accent-gold);
+        }
+
+        .link-btn i {
+            width: 30px;
+            font-size: 1.2rem;
+            margin-right: 15px;
+            color: var(--accent-gold);
+        }
+
+        /* Social Icons */
+        .socials {
+            margin-top: 2.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .social-icon {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-icon:hover {
+            color: var(--accent-gold);
+        }
+
+        footer {
+            margin-top: 3rem;
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+    </style>
 </head>
 <body>
 
     <div class="container">
-        <header>
-            <img src="assets/feast-logo.png" alt="The Feast Logo" class="logo">
-            <h1>The Feast Cebu City Ayala</h1>
-            
-            <div class="info-box">
-                <p><strong><i class="fas fa-calendar-day"></i> Every Sunday</strong></p>
-                <p>Session 1: 9:00 AM | Session 2: 11:15 AM</p>
-                <p><i class="fas fa-map-marker-alt"></i> Ayala Cinema 1, Cebu Business Park</p>
+        <div class="profile">
+            <div class="logo-placeholder">
+                <i class="fas fa-dove"></i>
             </div>
+            <h1>The Feast Cebu City</h1>
+            <p class="subtitle">Ayala Cinema 1, Cebu Business Park</p>
+        </div>
 
-            <div id="social-bar" class="social-bar"></div>
-        </header>
+        <div class="schedule-card">
+            <h2>Join Us Every Sunday</h2>
+            <div class="session">
+                <span><strong>Session 1:</strong> 9:00 AM</span>
+                <span>Mass & Talk</span>
+            </div>
+            <div class="session">
+                <span><strong>Session 2:</strong> 11:15 AM</span>
+                <span>Talk Only</span>
+            </div>
+        </div>
 
-        <main id="link-list">
-            <div class="loader">Loading your home in the city...</div>
-        </main>
+        <div class="links-container">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfg_ZT4yl5o5SZNbed-dd4BckYmgwjkxkY595Id3S3PzDotuQ/viewform" class="link-btn" target="_blank">
+                <i class="fas fa-hands-helping"></i> Serve with us!
+            </a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfg_ZT4yl5o5SZNbed-dd4BckYmgwjkxkY595Id3S3PzDotuQ/viewform" class="link-btn" target="_blank">
+                <i class="fas fa-user-plus"></i> First Timer Registration
+            </a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfg_ZT4yl5o5SZNbed-dd4BckYmgwjkxkY595Id3S3PzDotuQ/viewform" class="link-btn" target="_blank">
+                <i class="fas fa-users"></i> Join a Light Group
+            </a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdAp5kVKx-QsoeZbGJs9YpxmGRAsZTDhC-G-7wNwwvInFXv9Q/viewform" class="link-btn" target="_blank">
+                <i class="fas fa-church"></i> Mass Intentions
+            </a>
+            <a href="https://docs.google.com/forms/d/1BBNDFdI2OShn9WJs-E5OAW0mcX5Rr7yYZzJGzxXzyxQ/edit" class="link-btn" target="_blank">
+                <i class="fas fa-heart"></i> Prayer Request
+            </a>
+            <a href="https://cresvia-grazia.github.io/BRS_Ayala/" class="link-btn" target="_blank">
+                <i class="fas fa-book-open"></i> Pre-order Your Next Read
+            </a>
+        </div>
+
+        <div class="socials">
+            <a href="https://facebook.com/thefeastcebucity" class="social-icon" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://instagram.com/thefeastcebucity" class="social-icon" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://youtube.com/thefeastcebucity" class="social-icon" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="https://tiktok.com/@feast.cebu.city" class="social-icon" target="_blank"><i class="fab fa-tiktok"></i></a>
+        </div>
 
         <footer>
-            <p>Building Lives, Building Communities</p>
-            <p>&copy; 2026 FCCA Journey</p>
+            You are loved. Welcome home!
         </footer>
     </div>
 
-    <script>
-        // TAB 1: Action Links (The main buttons)
-        const MAIN_SHEET = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQrLk_EoIRtwGWrQOiv253waNRnet6eQldWDLvWkowWWFfRw1J93xA_PuhYqkXq4Si34bseClHGVFNl/pub?gid=0&single=true&output=csv';
-        
-        // TAB 2: Socials (Starting at J2)
-        // IMPORTANT: Update the gid=XXXX below to match your Socials Tab ID
-        const SOCIAL_SHEET = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQrLk_EoIRtwGWrQOiv253waNRnet6eQldWDLvWkowWWFfRw1J93xA_PuhYqkXq4Si34bseClHGVFNl/pub?gid=INSERT_SOCIAL_GID_HERE&single=true&output=csv';
-
-        async function initPortal() {
-            loadSocials();
-            loadActionButtons();
-        }
-
-        async function loadSocials() {
-            const bar = document.getElementById('social-bar');
-            try {
-                const response = await fetch(SOCIAL_SHEET);
-                const csvData = await response.text();
-                const rows = csvData.split('\n').map(row => row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
-
-                // Mapping for J2 Start: J=9, K=10, L=11
-                const idx = { social: 9, icon: 10, handle: 11 };
-
-                rows.slice(1).forEach(cols => {
-                    const iconVal = cols[idx.icon]?.replace(/"/g, '').trim().toLowerCase();
-                    const handle = cols[idx.handle]?.replace(/"/g, '').trim();
-
-                    if (iconVal && handle) {
-                        const iconMap = {
-                            'social-fb': { icon: 'fa-facebook', base: 'https://facebook.com/' },
-                            'social-ig': { icon: 'fa-instagram', base: 'https://instagram.com/' },
-                            'social-yt': { icon: 'fa-youtube', base: 'https://youtube.com/' },
-                            'social-tk': { icon: 'fa-tiktok', base: 'https://tiktok.com/@' }
-                        };
-
-                        const config = iconMap[iconVal] || { icon: 'fa-link', base: '' };
-                        const sLink = document.createElement('a');
-                        sLink.href = config.base + handle;
-                        sLink.target = '_blank';
-                        sLink.className = 'social-icon';
-                        sLink.innerHTML = `<i class="fab ${config.icon}"></i>`;
-                        bar.appendChild(sLink);
-                    }
-                });
-            } catch (e) { console.error("Socials failed to load."); }
-        }
-
-        async function loadActionButtons() {
-            const list = document.getElementById('link-list');
-            try {
-                const response = await fetch(MAIN_SHEET);
-                const csvData = await response.text();
-                const rows = csvData.split('\n').map(row => row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
-
-                // Standard Mapping for Tab 1 (B=1, C=2, D=3, F=5)
-                const idx = { order: 1, label: 2, url: 3, active: 5 };
-
-                const dataRows = rows.slice(1)
-                    .filter(row => row[idx.label] && row[idx.active]?.toUpperCase().includes('TRUE'))
-                    .sort((a, b) => (parseInt(a[idx.order]) || 99) - (parseInt(b[idx.order]) || 99));
-
-                list.innerHTML = '';
-                dataRows.forEach(cols => {
-                    const card = document.createElement('a');
-                    card.href = cols[idx.url].trim();
-                    card.className = 'fat-button';
-                    card.target = '_blank';
-                    card.innerHTML = `<span>${cols[idx.label]}</span>`;
-                    list.appendChild(card);
-                });
-            } catch (e) { list.innerHTML = '<p>Check back later!</p>'; }
-        }
-
-        initPortal();
-    </script>
 </body>
 </html>
