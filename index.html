@@ -3,25 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Feast Ayala Cebu | Links</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <title>The Feast Ayala Cebu | Official Links</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     
-    <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR-GA-ID"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'YOUR-GA-ID');
+      gtag('config', 'G-XXXXXXXXXX');
     </script>
 </head>
 <body>
     <div class="container">
         <header>
-            <img src="assets/logo.png" alt="The Feast Logo" class="logo">
-            <h1>The Feast Ayala Cebu</h1>
-            <p class="subtitle">You are loved. You are home.</p>
+            <img src="assets/feast-logo.png" alt="The Feast Logo" class="logo">
+            <h1>The Feast Cebu City Ayala</h1>
+            <div class="info-box">
+                <p><strong><i class="fas fa-calendar-alt"></i> Every Sunday</strong></p>
+                <p>Session 1: 9:00 AM (Holy Mass & Talk)</p>
+                <p>Session 2: 11:15 AM (Talk Only)</p>
+                <p><i class="fas fa-map-marker-alt"></i> Ayala Cinema 1, Cebu Business Park</p>
+            </div>
         </header>
 
         <main id="link-list">
@@ -35,16 +40,16 @@
     </div>
 
     <script>
-        const SHEET_URL = 'YOUR_PUBLISHED_CSV_URL_HERE';
+        const SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQrLk_EoIRtwGWrQOiv253waNRnet6eQldWDLvWkowWWFfRw1J93xA_PuhYqkXq4Si34bseClHGVFNl/pub?gid=0&single=true&output=csv';
 
         async function loadLinks() {
             const list = document.getElementById('link-list');
             try {
-                const response = await fetch(SHEET_URL);
-                const csvData = await response.text();
+                const response = await fetch(SHEET_CSV);
+                const csvText = await response.text();
                 
-                // Parse and Sort by Arrangement (Column 0)
-                const rows = csvData.split('\n').slice(1)
+                // Parse CSV rows
+                const rows = csvText.split('\n').slice(1)
                     .filter(row => row.trim() !== '')
                     .sort((a, b) => {
                         const orderA = parseInt(a.split(',')[0]) || 99;
@@ -54,12 +59,11 @@
 
                 list.innerHTML = '';
                 rows.forEach(row => {
-                    // Splits CSV even if there are commas inside quotes
                     const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
                     
                     const label = cols[1]?.replace(/"/g, '').trim();
                     const url = cols[2]?.replace(/"/g, '').trim();
-                    const icon = cols[3]?.replace(/"/g, '').trim();
+                    const icon = cols[3]?.replace(/"/g, '').trim() || 'link'; // Default icon
                     const active = cols[4]?.replace(/"/g, '').trim().toLowerCase();
 
                     if (active === 'true') {
@@ -70,16 +74,15 @@
                         card.innerHTML = `<i class="fas fa-${icon}"></i> <span>${label}</span>`;
                         
                         card.onclick = () => {
-                            gtag('event', 'select_content', {
-                                'content_type': 'link_button',
-                                'item_id': label
-                            });
+                            if (typeof gtag !== 'undefined') {
+                                gtag('event', 'link_click', { 'event_label': label });
+                            }
                         };
                         list.appendChild(card);
                     }
                 });
             } catch (e) {
-                list.innerHTML = '<p>Check connection or spreadsheet settings.</p>';
+                list.innerHTML = '<p>Welcome Home! Please refresh to see latest links.</p>';
             }
         }
         loadLinks();
