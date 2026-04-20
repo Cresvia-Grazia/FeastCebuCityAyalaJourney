@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Feast Ayala Cebu | Links</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR-GA-ID"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'YOUR-GA-ID');
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="assets/logo.png" alt="The Feast Logo" class="logo">
+            <h1>The Feast Ayala Cebu</h1>
+            <p class="subtitle">You are loved. You are home.</p>
+        </header>
+
+        <main id="link-list">
+            <div class="loader">Grace is loading...</div>
+        </main>
+
+        <footer>
+            <p>Building Lives, Building Communities</p>
+            <p>&copy; 2026 FCCA Journey</p>
+        </footer>
+    </div>
+
+    <script>
+        const SHEET_URL = 'YOUR_PUBLISHED_CSV_URL_HERE';
+
+        async function loadLinks() {
+            const list = document.getElementById('link-list');
+            try {
+                const response = await fetch(SHEET_URL);
+                const csvData = await response.text();
+                
+                // Parse and Sort by Arrangement (Column 0)
+                const rows = csvData.split('\n').slice(1)
+                    .filter(row => row.trim() !== '')
+                    .sort((a, b) => {
+                        const orderA = parseInt(a.split(',')[0]) || 99;
+                        const orderB = parseInt(b.split(',')[0]) || 99;
+                        return orderA - orderB;
+                    });
+
+                list.innerHTML = '';
+                rows.forEach(row => {
+                    // Splits CSV even if there are commas inside quotes
+                    const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                    
+                    const label = cols[1]?.replace(/"/g, '').trim();
+                    const url = cols[2]?.replace(/"/g, '').trim();
+                    const icon = cols[3]?.replace(/"/g, '').trim();
+                    const active = cols[4]?.replace(/"/g, '').trim().toLowerCase();
+
+                    if (active === 'true') {
+                        const card = document.createElement('a');
+                        card.href = url;
+                        card.className = 'link-card';
+                        card.target = '_blank';
+                        card.innerHTML = `<i class="fas fa-${icon}"></i> <span>${label}</span>`;
+                        
+                        card.onclick = () => {
+                            gtag('event', 'select_content', {
+                                'content_type': 'link_button',
+                                'item_id': label
+                            });
+                        };
+                        list.appendChild(card);
+                    }
+                });
+            } catch (e) {
+                list.innerHTML = '<p>Check connection or spreadsheet settings.</p>';
+            }
+        }
+        loadLinks();
+    </script>
+</body>
+</html>
