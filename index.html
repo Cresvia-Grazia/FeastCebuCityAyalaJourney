@@ -7,14 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX');
-    </script>
 </head>
 <body>
 
@@ -25,14 +17,15 @@
             
             <div class="info-box">
                 <p><strong><i class="fas fa-calendar-check"></i> Every Sunday</strong></p>
-                <p>Session 1: 9:00 AM (Holy Mass & Talk)</p>
-                <p>Session 2: 11:15 AM (Talk Only)</p>
+                <p>Session 1: 9:00 AM | Session 2: 11:15 AM</p>
                 <p><i class="fas fa-map-marker-alt"></i> Ayala Cinema 1, Cebu Business Park</p>
             </div>
+
+            <div id="social-bar" class="social-bar"></div>
         </header>
 
         <main id="link-list">
-            <div class="loader">Loading links...</div>
+            <div class="loader">Loading...</div>
         </main>
 
         <footer>
@@ -42,66 +35,59 @@
     </div>
 
     <script>
-        // Your published CSV link
         const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQrLk_EoIRtwGWrQOiv253waNRnet6eQldWDLvWkowWWFfRw1J93xA_PuhYqkXq4Si34bseClHGVFNl/pub?gid=0&single=true&output=csv';
 
         async function loadLinks() {
             const list = document.getElementById('link-list');
+            const socialBar = document.getElementById('social-bar');
             try {
                 const response = await fetch(SHEET_URL);
-                if (!response.ok) throw new Error('Fetch failed');
                 const csvData = await response.text();
-                
-                // Parse CSV rows
                 const rows = csvData.split('\n').map(row => row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
 
-                // DIRECT MAPPING (Assumes Arrangement is Col B, Label is Col C, etc.)
-                // Index 0=A, 1=B, 2=C, 3=D, 4=E, 5=F
-                const idx = {
-                    order: 1,  // Column B: Arrangement
-                    label: 2,  // Column C: Label
-                    url: 3,    // Column D: URL
-                    icon: 4,   // Column E: Icon
-                    active: 5  // Column F: Active
-                };
+                const idx = { order: 1, label: 2, url: 3, icon: 4, active: 5 };
 
-                // Filter rows that have a label and sort by the Arrangement number
                 const dataRows = rows.slice(1)
                     .filter(row => row[idx.label] && row[idx.label].trim() !== "")
                     .sort((a, b) => (parseInt(a[idx.order]) || 99) - (parseInt(b[idx.order]) || 99));
 
                 list.innerHTML = '';
+                socialBar.innerHTML = '';
 
                 dataRows.forEach(cols => {
-                    const activeStatus = cols[idx.active]?.replace(/"/g, '').trim().toUpperCase();
+                    const active = cols[idx.active]?.replace(/"/g, '').trim().toUpperCase();
+                    const iconType = cols[idx.icon]?.replace(/"/g, '').trim().toLowerCase();
+                    const label = cols[idx.label]?.replace(/"/g, '').trim();
+                    const url = cols[idx.url]?.replace(/"/g, '').trim();
 
-                    if (activeStatus === 'TRUE') {
-                        const label = cols[idx.label]?.replace(/"/g, '').trim();
-                        const url = cols[idx.url]?.replace(/"/g, '').trim();
-                        const icon = cols[idx.icon]?.replace(/"/g, '').trim() || 'link';
-
-                        const card = document.createElement('a');
-                        card.href = url;
-                        card.className = 'link-card';
-                        card.target = '_blank';
-                        card.innerHTML = `<i class="fas fa-${icon}"></i> <span>${label}</span>`;
-                        
-                        card.onclick = () => {
-                            if (typeof gtag !== 'undefined') {
-                                gtag('event', 'link_click', { 'event_label': label });
-                            }
-                        };
-                        list.appendChild(card);
+                    if (active === 'TRUE') {
+                        // IF SOCIAL: Add to top bar
+                        if (iconType.startsWith('social-')) {
+                            const iconMap = {
+                                'social-fb': 'fa-facebook',
+                                'social-ig': 'fa-instagram',
+                                'social-yt': 'fa-youtube',
+                                'social-tk': 'fa-tiktok'
+                            };
+                            const socialLink = document.createElement('a');
+                            socialLink.href = url;
+                            socialLink.target = '_blank';
+                            socialLink.innerHTML = `<i class="fab ${iconMap[iconType] || 'fa-link'}"></i>`;
+                            socialBar.appendChild(socialLink);
+                        } 
+                        // IF ACTION: Add as a button
+                        else {
+                            const card = document.createElement('a');
+                            card.href = url;
+                            card.className = 'link-card';
+                            card.target = '_blank';
+                            card.innerHTML = `<span>${label}</span>`;
+                            list.appendChild(card);
+                        }
                     }
                 });
-
-                if (list.innerHTML === '') {
-                    list.innerHTML = '<p class="msg">Check back later for updates!</p>';
-                }
-
             } catch (e) {
-                console.error("Error:", e);
-                list.innerHTML = '<p class="msg">Grace is loading... please refresh.</p>';
+                list.innerHTML = '<p>Check back later for updates!</p>';
             }
         }
         loadLinks();
